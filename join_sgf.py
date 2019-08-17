@@ -30,47 +30,49 @@ def join_all_sgf():
     df = df.append(df_p, sort=False, ignore_index=True)
 
     # 2000 - 2011
-    t = {'00statess.xlsx': {'year': '2000', 'data_rng': 'A8:EX64', 'col_rng': 'A3:EX3'},
-         '01statess.xlsx': {'year': '2001', 'data_rng': 'A8:EX66', 'col_rng': 'A3:EX3'},
-         '02statess.xlsx': {'year': '2002', 'data_rng': 'A8:CY66', 'col_rng': 'A3:CY3'},
-         '03statess.xlsx': {'year': '2003', 'data_rng': 'A8:CY65', 'col_rng': 'A3:CY3'},
-         '04statess.xlsx': {'year': '2004', 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
-         '05statess.xlsx': {'year': '2005', 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
-         '06statess.xlsx': {'year': '2006', 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
-         '07statess.xlsx': {'year': '2007', 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
-         '08statess.xlsx': {'year': '2008', 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
-         '09statess.xlsx': {'year': '2009', 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
-         '10statess.xlsx': {'year': '2010', 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
-         '11statess.xlsx': {'year': '2011', 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'}}
+    t = {'00statess.xlsx': {'year': 2000, 'data_rng': 'A8:EX64', 'col_rng': 'A3:EX3'},
+         '01statess.xlsx': {'year': 2001, 'data_rng': 'A8:EX66', 'col_rng': 'A3:EX3'},
+         '02statess.xlsx': {'year': 2002, 'data_rng': 'A8:CY66', 'col_rng': 'A3:CY3'},
+         '03statess.xlsx': {'year': 2003, 'data_rng': 'A8:CY65', 'col_rng': 'A3:CY3'},
+         '04statess.xlsx': {'year': 2004, 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
+         '05statess.xlsx': {'year': 2005, 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
+         '06statess.xlsx': {'year': 2006, 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
+         '07statess.xlsx': {'year': 2007, 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
+         '08statess.xlsx': {'year': 2008, 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
+         '09statess.xlsx': {'year': 2009, 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
+         '10statess.xlsx': {'year': 2010, 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'},
+         '11statess.xlsx': {'year': 2011, 'data_rng': 'A8:AZ64', 'col_rng': 'A3:AZ3'}}
 
     for i in t.keys():
         df_p = parse_00_11states.parse_file(
             filename=i, year=t[i]['year'], data_rng=t[i]['data_rng'], col_rng=t[i]['col_rng'])
-        df_p['year'] = int(t[i]['year'])
+        df_p['year'] = t[i]['year']
         df = df.append(df_p, sort=False, ignore_index=True)
 
     # 2012 - 2013
-    t = {'SGF_2012_SGF001.csv': {'year': '2012'},
-         'SGF_2013_SGF003.csv': {'year': '2013'}}
+    t = {'SGF_2012_SGF001.csv': {'year': 2012},
+         'SGF_2013_SGF003.csv': {'year': 2013}}
 
     for i in t.keys():
         df_p = parse_12_13states.parse_file(filename=i, year=t[i]['year'])
-        df_p['year'] = int(t[i]['year'])
+        df_p['year'] = t[i]['year']
         df = df.append(df_p, sort=False, ignore_index=True)
 
     # 2014 - 2016
-    t = {'SGF_2014_00A1.csv': {'year': '2014'},
-         'SGF_2015_00A1.csv': {'year': '2015'},
-         'SGF_2016_00A1.csv': {'year': '2016'}}
+    t = {'SGF_2014_00A1.csv': {'year': 2014},
+         'SGF_2015_00A1.csv': {'year': 2015},
+         'SGF_2016_00A1.csv': {'year': 2016}}
 
     for i in t.keys():
         df_p = parse_14_16states.parse_file(filename=i, year=t[i]['year'])
-        df_p['year'] = int(t[i]['year'])
+        df_p['year'] = t[i]['year']
         df = df.append(df_p, sort=False, ignore_index=True)
 
     # column rename
     df.rename({'mapped_label': 'label', 'region': 'geographic_region'},
               axis='columns', inplace=True)
+
+    df
 
     return df
 

@@ -85,6 +85,8 @@ def file_parser():
     for k, v in sheet_lookup.items():
         df = df.append(pull_data(wb=wb, ranges=v, sheet_name=k), sort=False, ignore_index=True)
 
+    df.rename({'industry': 'input', 'industry_code': 'input_code', 'category': 'output',
+               'category_code': 'output_code'}, axis='columns', inplace=True)
     return df
 
 
@@ -96,8 +98,6 @@ def file_parser_to_csv():
 def file_parser_to_sql():
     # parse BEA Supply Table
     df = file_parser()
-    df.rename({'industry': 'input', 'industry_code': 'input_code', 'category': 'output',
-               'category_code': 'output_code'}, axis='columns', inplace=True)
 
     # to sql
     types = {'input': TEXT,

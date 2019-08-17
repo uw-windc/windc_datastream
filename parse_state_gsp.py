@@ -1,6 +1,6 @@
 import pandas as pd
 from sql_engines import windc_engine as engine
-from sqlalchemy import TEXT, FLOAT, text
+from sqlalchemy import TEXT, FLOAT, text, INTEGER
 import argparse
 import os
 
@@ -87,7 +87,7 @@ def file_parser_to_sql():
              'IndustryId': TEXT,
              'IndustryClassification': TEXT,
              'Description': TEXT,
-             'year': TEXT,
+             'year': INTEGER,
              'value': FLOAT}
     df.to_sql('gsp', con=engine, if_exists='replace', dtype=types)
 

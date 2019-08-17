@@ -46,7 +46,7 @@ def scrub_sgf(from_sql):
 
     # drop years if necessary
     years = read_csv('.{s}core_maps{s}gams{s}set_years.csv'.format(s=os.sep), index_col=None)
-    years = list(years.keys())
+    years = years.keys().astype(int).to_list()
     sgf['test'] = sgf['year'].isin(years)
     sgf.drop(sgf[sgf['test'] == False].index, inplace=True)
     sgf.drop(columns='test', inplace=True)

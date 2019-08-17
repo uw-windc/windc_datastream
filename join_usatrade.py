@@ -38,7 +38,7 @@ def join_all_usatrade_to_sql():
     types = {'flow': TEXT,
              'region': TEXT,
              'Country': TEXT,
-             'year': INTEGER,
+             'year': TEXT,
              'value': FLOAT,
              'NAICS': INTEGER,
              'Commodity_desc': TEXT,

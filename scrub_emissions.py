@@ -19,7 +19,7 @@ def scrub_emissions(from_sql):
 
     # drop data that is not in set yr
     years = read_csv('.{s}core_maps{s}gams{s}set_years.csv'.format(s=os.sep), index_col=None)
-    years = list(years.keys())
+    years = years.keys().astype(int).to_list()
     emissions['test'] = emissions['year'].isin(years)
     emissions.drop(emissions[emissions['test'] == False].index, inplace=True)
 
