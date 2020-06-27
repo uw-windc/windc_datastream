@@ -1,3 +1,4 @@
-datasources*/
 __pycache__/
 windc_base.gdx
+dist/
+windc_data.egg-info/
