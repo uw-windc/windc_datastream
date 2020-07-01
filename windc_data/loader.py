@@ -10,7 +10,7 @@ from textwrap import wrap
 
 class WindcEnvironment:
 
-    _versions = {"windc_2_0_1": windc_2_0_1}
+    _versions = {"windc_2_0_1": windc_2_0_1, "windc_2_1": windc_2_1}
     _load_options = {
         "windc_2_0_1": {
             "bea_use",
@@ -28,12 +28,29 @@ class WindcEnvironment:
             "state_exim",
             "census_sgf",
             "emission_rate",
-        }
+        },
+        "windc_2_1": {
+            "bea_use",
+            "bea_supply",
+            "cfs",
+            "bea_use_det",
+            "bea_supply_det",
+            "eia_emissions",
+            "eia_crude_price",
+            "eia_seds",
+            "eia_heatrate",
+            "usda_nass",
+            "bea_pce",
+            "bea_gsp",
+            "state_exim",
+            "census_sgf",
+            "emission_rate",
+        },
     }
 
     def __init__(self, gams_sysdir, data_dir, version=None, load=None):
         if version is None:
-            version = "windc_2_0_1"
+            version = "windc_2_1"
         if version not in self._versions:
             raise ValueError(f"Unknown Windc version: {version}")
 
@@ -87,6 +104,9 @@ class WindcEnvironment:
                 self.data[i] = getattr(self._versions[self.version].join, i)(
                     self.data_dir
                 )
+
+    def diff(self):
+        pass
 
     def bulk_strip(self):
         for k, v in self.data.items():
@@ -717,6 +737,7 @@ class WindcEnvironment:
                     "WISCONSIN": "Wisconsin",
                     "WYOMING": "Wyoming",
                     "Dist of Columbia": "District of Columbia",
+                    "State total (unadjusted)": "United States",
                     "Dollars": "us dollars (USD)",
                     "Percent change": "percent change",
                     "Thousand Btu per cubic feet": "thousand btu per cubic foot",
@@ -751,8 +772,437 @@ class WindcEnvironment:
             # remap regions to defaults
             self.remap()
 
+        if self.version == "windc_2_1":
+            self.windc_notation["year"] = set([str(i) for i in range(1997, 2018)])
+
+            self.bulk_strip()
+            self.remove_zeros()
+
+            self.data["bea_gsp"].rename(
+                columns={"LineCode": "IndustryId"}, inplace=True
+            )
+
+            dtypes = {
+                "bea_supply": {
+                    "IOCode": str,
+                    "Row_Name": str,
+                    "Commodities/Industries": str,
+                    "Column_Name": str,
+                    "value": float,
+                    "year": str,
+                    "units": str,
+                },
+                "bea_use": {
+                    "IOCode": str,
+                    "Row_Name": str,
+                    "Commodities/Industries": str,
+                    "Column_Name": str,
+                    "value": float,
+                    "year": str,
+                    "units": str,
+                },
+                "bea_supply_det": {
+                    "IOCode": str,
+                    "Row_Name": str,
+                    "Commodities/Industries": str,
+                    "Column_Name": str,
+                    "value": float,
+                    "year": str,
+                    "units": str,
+                },
+                "bea_use_det": {
+                    "IOCode": str,
+                    "Row_Name": str,
+                    "Commodities/Industries": str,
+                    "Column_Name": str,
+                    "value": float,
+                    "year": str,
+                    "units": str,
+                },
+                "census_sgf": {
+                    "Category": str,
+                    "State": str,
+                    "value": float,
+                    "year": str,
+                    "units": str,
+                },
+                "cfs": {
+                    "SHIPMT_ID": str,
+                    "ORIG_STATE": str,
+                    "ORIG_MA": str,
+                    "ORIG_CFS_AREA": str,
+                    "DEST_STATE": str,
+                    "DEST_MA": str,
+                    "DEST_CFS_AREA": str,
+                    "NAICS": str,
+                    "QUARTER": str,
+                    "SCTG": str,
+                    "MODE": str,
+                    "SHIPMT_VALUE": float,
+                    "SHIPMT_WGHT": float,
+                    "SHIPMT_DIST_GC": float,
+                    "SHIPMT_DIST_ROUTED": float,
+                    "TEMP_CNTL_YN": str,
+                    "EXPORT_YN": str,
+                    "EXPORT_CNTRY": str,
+                    "HAZMAT": str,
+                    "WGT_FACTOR": float,
+                    "SHIPMT_VALUE_units": str,
+                    "SHIPMT_WGHT_units": str,
+                    "SHIPMT_DIST_GC_units": str,
+                    "SHIPMT_DIST_ROUTED_units": str,
+                    "year": str,
+                },
+                "bea_gsp": {
+                    "GeoFIPS": str,
+                    "GeoName": str,
+                    "Region": str,
+                    "TableName": str,
+                    "ComponentName": str,
+                    "Unit": str,
+                    "IndustryId": str,
+                    "IndustryClassification": str,
+                    "Description": str,
+                    "year": str,
+                    "value": float,
+                },
+                "bea_pce": {
+                    "GeoFIPS": str,
+                    "GeoName": str,
+                    "Region": str,
+                    "TableName": str,
+                    "ComponentName": str,
+                    "Unit": str,
+                    "Line": str,
+                    "IndustryClassification": str,
+                    "Description": str,
+                    "year": str,
+                    "value": float,
+                },
+                "eia_crude_price": {
+                    "year": str,
+                    "price": float,
+                    "units": str,
+                    "notes": str,
+                },
+                "eia_emissions": {
+                    "State": str,
+                    "year": str,
+                    "emissions": float,
+                    "units": str,
+                    "sector": str,
+                },
+                "eia_heatrate": {
+                    "year": str,
+                    "units": str,
+                    "variable": str,
+                    "value": float,
+                },
+                "eia_seds": {
+                    "Data_Status": str,
+                    "MSN": str,
+                    "StateCode": str,
+                    "Year": str,
+                    "Data": float,
+                    "full_description": str,
+                    "units": str,
+                    "source": str,
+                    "sector": str,
+                },
+                "state_exim": {
+                    "State": str,
+                    "Commodity": str,
+                    "Country": str,
+                    "Time": str,
+                    "value": float,
+                    "NAICS": str,
+                    "Commodity Description": str,
+                    "units": str,
+                    "flow": str,
+                },
+                "usda_nass": {
+                    "Program": str,
+                    "Year": str,
+                    "Period": str,
+                    "Geo Level": str,
+                    "State": str,
+                    "State ANSI": str,
+                    "watershed_code": str,
+                    "Commodity": str,
+                    "Data Item": str,
+                    "Domain": str,
+                    "Domain Category": str,
+                    "Value": float,
+                    "CV (%)": float,
+                    "units": str,
+                },
+                "emission_rate": {"fuel": str, "units": str, "value": float,},
+            }
+
+            self.column_dtypes(dtypes)
+
+            self.windc_notation["usda_naics"] = {
+                "11111",
+                "11112",
+                "11113",
+                "11114",
+                "11115",
+                "11116",
+                "11119",
+                "1112",
+                "1113",
+                "1114",
+                "1119",
+                "11211",
+                "11212",
+                "1122",
+                "1123",
+                "1124",
+                "1125",
+                "1129",
+            }
+
+            # create a new notation
+            self.windc_notation["units"] = {
+                "kilowatthours",
+                "barrels",
+                "kilograms CO2 per million btu",
+                "billion btu",
+                "btu per kilowatthour",
+                "million btu",
+                "million btu per barrel",
+                "million btu per short ton",
+                "million cubic feet",
+                "million kilowatthours",
+                "million metric tons of carbon dioxide",
+                "millions of chained (2009) us dollars (USD)",
+                "millions of chained (2012) us dollars (USD)",
+                "millions of current us dollars (USD)",
+                "millions of us dollars (USD)",
+                "percent",
+                "percent change",
+                "percentage points",
+                "quantity index",
+                "thousand",
+                "thousand barrels",
+                "thousand btu per chained (2009) us dollars (USD)",
+                "thousand btu per chained (2012) us dollars (USD)",
+                "thousand btu per cubic foot",
+                "thousand btu per kilowatthour",
+                "thousand cords",
+                "thousand cubic feet",
+                "thousand short tons",
+                "thousands of us dollars (USD)",
+                "us dollars (USD)",
+                "us dollars (USD) per million btu",
+                "us dollars (USD) per barrel",
+            }
+
+            # create a new notation from data
+            cfs_ma = set(self.data["cfs"]["ORIG_MA"])
+            cfs_ma.update(set(self.data["cfs"]["DEST_MA"]))
+            cfs_ma = cfs_ma - {"0"}
+            self.windc_notation["cfs_ma"] = cfs_ma
+
+            # create a new notation from data
+            # drop undisclosed SCTG data
+            cfs_sctg = set(self.data["cfs"]["SCTG"])
+            cfs_sctg = cfs_sctg - {
+                "00",
+                "25-30",
+                "01-05",
+                "15-19",
+                "10-14",
+                "06-09",
+                "39-99",
+                "20-24",
+                "31-34",
+                "35-38",
+                "99",
+            }
+            self.windc_notation["cfs_sctg"] = cfs_sctg
+
+            # create a new notation from data
+            # drop undisclosed SCTG data
+            self.windc_notation["cfs_export"] = {"N"}
+
+            # create notation links
+            self.notation_link["cfs"] = [
+                ("ORIG_STATE", "fips.state"),
+                ("DEST_STATE", "fips.state"),
+                ("ORIG_MA", "cfs_ma"),
+                ("DEST_MA", "cfs_ma"),
+                ("SCTG", "cfs_sctg"),
+                ("EXPORT_YN", "cfs_export"),
+            ]
+
+            # create a new notation from data
+            gsp = set(self.data["bea_gsp"]["ComponentName"])
+            gsp = gsp - {"Contributions to percent change in real GDP"}
+            self.windc_notation["gsp_componentname"] = gsp
+
+            # create a new notation from data
+            self.windc_notation["pce_componentname"] = {
+                "Total personal consumption expenditures (PCE) by state"
+            }
+
+            # create a new notation from data
+            self.windc_notation["sgf_category"] = set(
+                self.data["census_sgf"]["Category"]
+            )
+
+            self.windc_notation["exim_cnty"] = {"World Total"}
+
+            self.notation_link["bea_supply"] = [("year", "year")]
+            self.notation_link["bea_use"] = [("year", "year")]
+            self.notation_link["bea_supply_det"] = [("year", "year")]
+            self.notation_link["bea_use_det"] = [("year", "year")]
+
+            self.notation_link["bea_gsp"] = [
+                ("year", "year"),
+                ("GeoName", "region.fullname"),
+                ("Unit", "units"),
+                ("ComponentName", "gsp_componentname"),
+            ]
+            self.notation_link["bea_pce"] = [
+                ("year", "year"),
+                ("GeoName", "region.fullname"),
+                ("Unit", "units"),
+                ("ComponentName", "pce_componentname"),
+            ]
+            self.notation_link["eia_crude_price"] = [
+                ("year", "year"),
+                ("units", "units"),
+            ]
+            self.notation_link["eia_emissions"] = [
+                ("year", "year"),
+                ("State", "region.fullname"),
+                ("units", "units"),
+            ]
+            self.notation_link["eia_heatrate"] = [("year", "year"), ("units", "units")]
+            self.notation_link["eia_seds"] = [
+                ("Year", "year"),
+                ("StateCode", "region.abbv"),
+                ("units", "units"),
+            ]
+            self.notation_link["state_exim"] = [
+                ("State", "region.fullname"),
+                ("Time", "year"),
+                ("units", "units"),
+                ("Country", "exim_cnty"),
+            ]
+            self.notation_link["usda_nass"] = [
+                ("Year", "year"),
+                ("State", "region.fullname"),
+                ("Domain Category", "usda_naics"),
+                ("units", "units"),
+            ]
+
+            self.notation_link["census_sgf"] = [
+                ("year", "year"),
+                ("State", "region.fullname"),
+                ("units", "units"),
+                ("Category", "sgf_category"),
+            ]
+
+            self.bulk_replace(
+                {
+                    "ALABAMA": "Alabama",
+                    "ALASKA": "Alaska",
+                    "ARIZONA": "Arizona",
+                    "ARKANSAS": "Arkansas",
+                    "CALIFORNIA": "California",
+                    "COLORADO": "Colorado",
+                    "CONNECTICUT": "Connecticut",
+                    "DELAWARE": "Delaware",
+                    "DISTRICT OF COLUMBIA": "District of Columbia",
+                    "FLORIDA": "Florida",
+                    "GEORGIA": "Georgia",
+                    "HAWAII": "Hawaii",
+                    "IDAHO": "Idaho",
+                    "ILLINOIS": "Illinois",
+                    "INDIANA": "Indiana",
+                    "IOWA": "Iowa",
+                    "KANSAS": "Kansas",
+                    "KENTUCKY": "Kentucky",
+                    "LOUISIANA": "Louisiana",
+                    "MAINE": "Maine",
+                    "MARYLAND": "Maryland",
+                    "MASSACHUSETTS": "Massachusetts",
+                    "MICHIGAN": "Michigan",
+                    "MINNESOTA": "Minnesota",
+                    "MISSISSIPPI": "Mississippi",
+                    "MISSOURI": "Missouri",
+                    "MONTANA": "Montana",
+                    "NEBRASKA": "Nebraska",
+                    "NEVADA": "Nevada",
+                    "NEW HAMPSHIRE": "New Hampshire",
+                    "NEW JERSEY": "New Jersey",
+                    "NEW MEXICO": "New Mexico",
+                    "NEW YORK": "New York",
+                    "NORTH CAROLINA": "North Carolina",
+                    "NORTH DAKOTA": "North Dakota",
+                    "OHIO": "Ohio",
+                    "OKLAHOMA": "Oklahoma",
+                    "OREGON": "Oregon",
+                    "PENNSYLVANIA": "Pennsylvania",
+                    "RHODE ISLAND": "Rhode Island",
+                    "SOUTH CAROLINA": "South Carolina",
+                    "SOUTH DAKOTA": "South Dakota",
+                    "TENNESSEE": "Tennessee",
+                    "TEXAS": "Texas",
+                    "UTAH": "Utah",
+                    "UNITED STATES": "United States",
+                    "VERMONT": "Vermont",
+                    "VIRGINIA": "Virginia",
+                    "WASHINGTON": "Washington",
+                    "WEST VIRGINIA": "West Virginia",
+                    "WISCONSIN": "Wisconsin",
+                    "WYOMING": "Wyoming",
+                    "Dist of Columbia": "District of Columbia",
+                    "State total (unadjusted)": "United States",
+                    "Dollars": "us dollars (USD)",
+                    "Percent change": "percent change",
+                    "Thousand Btu per cubic feet": "thousand btu per cubic foot",
+                    "Thousand": "thousand",
+                    "Quantity index": "quantity index",
+                    "Percent": "percent",
+                    "Dollars per million Btu": "us dollars (USD) per million btu",
+                    "Billion Btu": "billion btu",
+                    "Thousand Btu per kilowatthour": "thousand btu per kilowatthour",
+                    "Million Btu per short ton": "million btu per short ton",
+                    "Thousand short tons": "thousand short tons",
+                    "Million cubic feet": "million cubic feet",
+                    "Million chained (2009) dollars": "millions of chained (2009) us dollars (USD)",
+                    "Thousand cords": "thousand cords",
+                    "Thousand Btu per chained (2009) dollar": "thousand btu per chained (2009) us dollars (USD)",
+                    "Percentage points": "percentage points",
+                    "Million kilowatthours": "million kilowatthours",
+                    "Million dollars": "millions of us dollars (USD)",
+                    "Thousand Btu per cubic foot": "thousand btu per cubic foot",
+                    "btu per kWh generated": "btu per kilowatthour",
+                    "Thousands of dollars": "thousands of us dollars (USD)",
+                    "Million Btu per barrel": "million btu per barrel",
+                    "Million Btu": "million btu",
+                    "Millions of chained 2012 dollars": "millions of chained (2012) us dollars (USD)",
+                    "Millions of current dollars": "millions of us dollars (USD)",
+                    "Thousand barrels": "thousand barrels",
+                    "Barrels": "barrels",
+                    "Kilowatthours": "kilowatthours",
+                    "Million chained (2012) dollars": "millions of chained (2012) us dollars (USD)",
+                    "Thousand Btu per chained (2012) dollar": "thousand btu per chained (2012) us dollars (USD)",
+                    "Thousand cubic feet": "thousand cubic feet",
+                }
+            )
+
+            self.test_notation()
+            self.drop_rows()
+
+            # remap regions to defaults
+            self.remap()
+
     def remap(self):
-        if self.version == "windc_2_0_1":
+        if self.version in {"windc_2_0_1", "windc_2_1"}:
             for k in self.notation_link:
                 for d, nl in self.notation_link[k]:
                     for kk, vv in mappings.maps.items():
@@ -821,8 +1271,40 @@ class WindcEnvironment:
             df = pd.concat(df, ignore_index=True)
             self.data["eia_heatrate"] = copy.deepcopy(df)
 
+        if self.version == "windc_2_1":
+            from .windc_2_1 import xfrm
+
+            # transform CFS data
+            self.data["cfs_st"], self.data["cfs_ma"] = xfrm.cfs(self.data["cfs"])
+
+            # transform bea_gsp data
+            self.data["bea_gsp"] = xfrm.gsp(self.data["bea_gsp"])
+
+            # transform usda_nass data
+            self.data["usda_nass"] = xfrm.usda_nass(self.data["usda_nass"])
+
+            # transform census_sgf data
+            self.data["census_sgf"] = xfrm.census_sgf(self.data["census_sgf"])
+
+            # transform state_exim data
+            self.data["state_exim"] = xfrm.state_exim(self.data["state_exim"])
+
+            # transform eia_heatrate data within class to allow access to some data
+            # fill years in notation but not in data with 2005 values
+            df = [self.data["eia_heatrate"]]
+            for i in self.windc_notation["year"]:
+                if i not in set(self.data["eia_heatrate"]["year"]):
+                    t = self.data["eia_heatrate"][
+                        self.data["eia_heatrate"]["year"] == "2005"
+                    ].copy()
+                    t["year"] = i
+                    df.append(t)
+
+            df = pd.concat(df, ignore_index=True)
+            self.data["eia_heatrate"] = copy.deepcopy(df)
+
     def apply_gams_labels(self):
-        if self.version == "windc_2_0_1":
+        if self.version in {"windc_2_0_1", "windc_2_1"}:
             # eia_emissions
             self.data["eia_emissions"]["gams.sector"] = self.data["eia_emissions"][
                 "sector"
@@ -984,8 +1466,8 @@ class WindcEnvironment:
         return t - {np.nan}
 
     def gdx_data(self):
-        if self.version == "windc_2_0_1":
-            # build data structure that is compatiable wiht gmsxfr
+        if self.version in {"windc_2_0_1", "windc_2_1"}:
+            # build data structure that is compatiable with gmsxfr
             data = {}
 
             # regions
@@ -1227,6 +1709,7 @@ class WindcEnvironment:
                 zip(
                     zip(
                         self.data["usda_nass"]["State"],
+                        self.data["usda_nass"]["Year"],
                         self.data["usda_nass"]["Domain Category"],
                         self.data["usda_nass"]["units"],
                     ),
