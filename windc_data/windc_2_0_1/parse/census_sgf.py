@@ -37,13 +37,16 @@ def _1996(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_1992_2004.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_1992_2004[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -95,13 +98,16 @@ def _1997(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_1992_2004.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_1992_2004[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -153,13 +159,16 @@ def _1998(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_1992_2004.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_1992_2004[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -211,13 +220,16 @@ def _1999(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_1992_2004.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_1992_2004[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -269,13 +281,16 @@ def _2000(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_1992_2004.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_1992_2004[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -327,13 +342,16 @@ def _2001(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_1992_2004.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_1992_2004[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -385,13 +403,16 @@ def _2002(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_1992_2004.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_1992_2004[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -443,13 +464,16 @@ def _2003(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_1992_2004.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_1992_2004[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -501,13 +525,16 @@ def _2004(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_1992_2004.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_1992_2004[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -559,13 +586,16 @@ def _2005(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2005_2011.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2005_2011[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -617,13 +647,16 @@ def _2006(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2005_2011.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2005_2011[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -675,13 +708,16 @@ def _2007(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2005_2011.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2005_2011[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -733,13 +769,16 @@ def _2008(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2005_2011.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2005_2011[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -791,13 +830,16 @@ def _2009(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2005_2011.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2005_2011[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -849,13 +891,16 @@ def _2010(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2005_2011.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2005_2011[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -907,13 +952,16 @@ def _2011(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2005_2011.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2005_2011[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -965,13 +1013,16 @@ def _2012(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2012_2018.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2012_2018[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -1023,13 +1074,16 @@ def _2013(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2012_2018.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2012_2018[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -1081,13 +1135,16 @@ def _2014(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2012_2018.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2012_2018[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -1139,13 +1196,16 @@ def _2015(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2012_2018.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2012_2018[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -1197,13 +1257,16 @@ def _2016(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2012_2018.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2012_2018[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -1255,13 +1318,16 @@ def _2017(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2012_2018.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2012_2018[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
@@ -1313,13 +1379,16 @@ def _2018(data_dir):
     cols.extend(regions)
     table = pd.DataFrame(columns=cols)
 
-    for n, row in enumerate(sgf_table_sums.sums_2012_2018.keys()):
+    for n, row in enumerate(sgf_table_sums.sums_new_methodology.keys()):
         table.loc[n, "Category"] = row
 
         for region in regions:
             table.loc[n, region] = t[
                 (t["Government Name"] == region)
-                & (t["Item Code"].isin(sgf_table_sums.sums_2012_2018[row]) == True)
+                & (
+                    t["Item Code"].isin(sgf_table_sums.sums_new_methodology[row])
+                    == True
+                )
             ]["Amount"].sum()
 
     table = pd.melt(table, id_vars="Category", var_name="State")
