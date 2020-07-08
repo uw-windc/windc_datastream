@@ -1074,7 +1074,6 @@ sums_new_methodology = {
         "J68",
         "J85",
     },
-    "General expenditure, by function:": {},
     "Education": {
         "E12",
         "E16",
