@@ -479,7 +479,9 @@ class GdxContainer:
                     if self.symDim[n] == 1:
                         df[n]["elements"] = list(elements["dim0"])
                     if self.symDim[n] > 1:
-                        df[n]["elements"] = list(elements.to_records(index=False))
+                        df[n]["elements"] = list(
+                            elements.itertuples(index=False, name=None)
+                        )
 
                 if self.symType[n] in {"parameter", "scalar"}:
                     if self.symDim[n] == 0:
