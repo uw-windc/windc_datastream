@@ -544,6 +544,74 @@ class WindcEnvironment:
             }
 
             # create a new notation
+            self.windc_notation["gsp_industry_id"] = {
+                "4",
+                "5",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
+                "26",
+                "27",
+                "28",
+                "29",
+                "30",
+                "31",
+                "32",
+                "33",
+                "34",
+                "35",
+                "37",
+                "38",
+                "39",
+                "40",
+                "41",
+                "42",
+                "43",
+                "44",
+                "46",
+                "47",
+                "48",
+                "49",
+                "52",
+                "53",
+                "54",
+                "55",
+                "57",
+                "58",
+                "61",
+                "62",
+                "63",
+                "64",
+                "66",
+                "67",
+                "69",
+                "71",
+                "72",
+                "73",
+                "76",
+                "77",
+                "79",
+                "80",
+                "81",
+                "83",
+                "84",
+                "85",
+            }
+
+            # create a new notation
             self.windc_notation["units"] = {
                 "kilograms CO2 per million btu",
                 "billion btu",
@@ -639,35 +707,42 @@ class WindcEnvironment:
                 ("year", "year"),
                 ("GeoName", "region.fullname"),
                 ("Unit", "units"),
+                ("IndustryId", "gsp_industry_id"),
                 ("ComponentName", "gsp_componentname"),
             ]
+
             self.notation_link["bea_pce"] = [
                 ("year", "year"),
                 ("GeoName", "region.fullname"),
                 ("Unit", "units"),
                 ("ComponentName", "pce_componentname"),
             ]
+
             self.notation_link["eia_crude_price"] = [
                 ("year", "year"),
                 ("units", "units"),
             ]
+
             self.notation_link["eia_emissions"] = [
                 ("year", "year"),
                 ("State", "region.fullname"),
                 ("units", "units"),
             ]
+
             self.notation_link["eia_heatrate"] = [("year", "year"), ("units", "units")]
             self.notation_link["eia_seds"] = [
                 ("Year", "year"),
                 ("StateCode", "region.abbv"),
                 ("units", "units"),
             ]
+
             self.notation_link["state_exim"] = [
                 ("State", "region.fullname"),
                 ("Time", "year"),
                 ("units", "units"),
                 ("Country", "exim_cnty"),
             ]
+
             self.notation_link["usda_nass"] = [
                 ("Year", "year"),
                 ("State", "region.fullname"),
@@ -963,6 +1038,74 @@ class WindcEnvironment:
             }
 
             # create a new notation
+            self.windc_notation["gsp_industry_id"] = {
+                "4",
+                "5",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
+                "26",
+                "27",
+                "28",
+                "29",
+                "30",
+                "31",
+                "32",
+                "33",
+                "34",
+                "35",
+                "37",
+                "38",
+                "39",
+                "40",
+                "41",
+                "42",
+                "43",
+                "44",
+                "46",
+                "47",
+                "48",
+                "49",
+                "52",
+                "53",
+                "54",
+                "55",
+                "57",
+                "58",
+                "61",
+                "62",
+                "63",
+                "64",
+                "66",
+                "67",
+                "69",
+                "71",
+                "72",
+                "73",
+                "76",
+                "77",
+                "79",
+                "80",
+                "81",
+                "83",
+                "84",
+                "85",
+            }
+
+            # create a new notation
             self.windc_notation["units"] = {
                 "kilowatthours",
                 "barrels",
@@ -1062,35 +1205,42 @@ class WindcEnvironment:
                 ("year", "year"),
                 ("GeoName", "region.fullname"),
                 ("Unit", "units"),
+                ("IndustryId", "gsp_industry_id"),
                 ("ComponentName", "gsp_componentname"),
             ]
+
             self.notation_link["bea_pce"] = [
                 ("year", "year"),
                 ("GeoName", "region.fullname"),
                 ("Unit", "units"),
                 ("ComponentName", "pce_componentname"),
             ]
+
             self.notation_link["eia_crude_price"] = [
                 ("year", "year"),
                 ("units", "units"),
             ]
+
             self.notation_link["eia_emissions"] = [
                 ("year", "year"),
                 ("State", "region.fullname"),
                 ("units", "units"),
             ]
+
             self.notation_link["eia_heatrate"] = [("year", "year"), ("units", "units")]
             self.notation_link["eia_seds"] = [
                 ("Year", "year"),
                 ("StateCode", "region.abbv"),
                 ("units", "units"),
             ]
+
             self.notation_link["state_exim"] = [
                 ("State", "region.fullname"),
                 ("Time", "year"),
                 ("units", "units"),
                 ("Country", "exim_cnty"),
             ]
+
             self.notation_link["usda_nass"] = [
                 ("Year", "year"),
                 ("State", "region.fullname"),
