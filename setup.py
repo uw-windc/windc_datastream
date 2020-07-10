@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="windc_data",
-    version="0.1.11",
+    version="0.1.12",
     author="Adam Christensen",
     author_email="achristensen@gams.com",
     description="A helper package to read/write WiNDC Data",
