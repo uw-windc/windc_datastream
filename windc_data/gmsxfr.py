@@ -1714,7 +1714,7 @@ class GdxContainer:
             if i not in self.__symLoaded__:
                 self.__symLoaded__.append(i)
 
-    def __find_write_order__(self, output_graph=False, n_shells=2):
+    def __find_write_order__(self):
         # find a proper gdx write order
         # 1. Topologically sorted list of sets (build from a DAG)
         # 2. singleton sets
@@ -1779,7 +1779,7 @@ class GdxContainer:
 
         return gdx_write_order
 
-    def write_gdx(self, gdxout, compress=False, domain_graph=False, n_shells=2):
+    def write_gdx(self, gdxout, compress=False):
         """
         The write_gdx() method is used export data contained in the GdxContainer to a GDX file for use directly in GAMS.
 
@@ -1802,11 +1802,6 @@ class GdxContainer:
         if not isinstance(compress, bool):
             raise Exception(
                 "compress must be of type bool, optional, default no compression"
-            )
-
-        if not isinstance(domain_graph, bool):
-            raise Exception(
-                "domain_graph must be of type bool, optional, default no graph output"
             )
 
         if os.path.isabs(gdxout) == False:
@@ -1846,9 +1841,7 @@ class GdxContainer:
             ]
 
         # find proper symbol write order to enable domain checking
-        gdx_write_order = self.__find_write_order__(
-            output_graph=domain_graph, n_shells=n_shells
-        )
+        gdx_write_order = self.__find_write_order__()
         print(f"gdx symbols will be written in the following order: {gdx_write_order}")
 
         #
