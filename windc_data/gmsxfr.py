@@ -4,8 +4,6 @@ import pandas as pd
 import numpy as np
 import networkx as nx
 import time
-import matplotlib as mpl
-import matplotlib.pyplot as plt
 from schema import Schema, And, Or, Use, Optional
 import sys
 from tqdm import tqdm
@@ -1738,42 +1736,6 @@ class GdxContainer:
         if not (not sorted_sets):
             sorted_sets.pop()
             gdx_write_order.extend(list(reversed(sorted_sets)))
-
-        # ******
-        # output graph of set_map
-        if output_graph == True:
-            nodes_per_shell = len(gdx_write_order) // n_shells
-            r = len(gdx_write_order) - nodes_per_shell * n_shells
-
-            shells = ["*"]
-            n = 0
-            for _ in range(n_shells - 1):
-                shells.append(gdx_write_order[n : n + nodes_per_shell])
-                n = n + nodes_per_shell
-            shells.append(gdx_write_order[n:])
-
-            pos = nx.layout.shell_layout(G, shells)
-            nodes = nx.draw_networkx_nodes(
-                G,
-                pos,
-                node_color="y",
-                node_shape="h",
-                node_size=100,
-                edgecolors="k",
-                linewidths=0.8,
-                alpha=0.75,
-            )
-            edges = nx.draw_networkx_edges(
-                G, pos, arrowstyle="->", arrowsize=6, width=0.8, alpha=0.8
-            )
-
-            labels = {k: f"{v}" for k, v in zip(list(G.nodes), list(G.nodes))}
-            nx.draw_networkx_labels(G, pos, labels, font_size=6, font_weight="normal")
-
-            ax = plt.gca()
-            ax.set_axis_off()
-            plt.savefig("domain_graph.png", dpi=600, format="png")
-        # ******
 
         [
             gdx_write_order.append(i)

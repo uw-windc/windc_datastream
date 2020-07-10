@@ -17,13 +17,11 @@ setuptools.setup(
     install_requires=[
         "gams",
         "ipython",
-        "matplotlib",
         "networkx",
         "pandas",
         "pip",
         "tqdm",
         "xlrd",
-        "pip",
         "argparse",
         "schema",
         "terminaltables",
