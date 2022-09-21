@@ -28,11 +28,7 @@ datasets = {
 
 
 
-#data_dir = r"C:\Users\Mitch\Documents\WiNDC\windc_raw_data\windc_3_0_0"
-
-#data_dir = r"C:\Users\mphillipson\Documents\WiNDC\windc_raw_data\windc_3_0_0"
-
-data_dir = r"C:\Users\mphillipson\Documents\WiNDC\windc_raw_data\windc_2_1"
+data_dir = r"path\to\data\version"
 
 
 w1 = wd.WindcEnvironment(data_dir,

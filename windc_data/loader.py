@@ -206,16 +206,7 @@ class WindcEnvironment:
         gdx_container.write(os.path.join(output_dir,output_name))
 
 
-if __name__ == "__main__":
-    
-    
-    #Mitch Home
-    #w1 = WindcEnvironment(r"C:\Users\Mitch\Documents\WiNDC\windc_raw_data")
-    
-    #Mitch work
-    w1 = WindcEnvironment(r"C:\Users\mphillipson\Documents\WiNDC\windc_raw_data\windc_3_0_0",
-                          verbose = False)
-    
+
     
     
     
