@@ -9,7 +9,7 @@ import windc_data as wd
 
 
 datasets = {
-    #"bea_gsp":wd.BeaGsp,
+    "bea_gsp":wd.BeaGsp,
     #"bea_pce":wd.BeaPce,
     #"bea_supply_det":wd.BeaSupplyDet,
     "bea_supply" : wd.BeaSupply,
