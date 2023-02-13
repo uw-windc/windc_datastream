@@ -408,13 +408,6 @@ class Parser:
 
 
 
-
-
-
-
-
-
-
     def remap(self):
         #if self.version in {"windc_2_0_1", "windc_2_1"}:
         #    for k in self.notation_link:
@@ -437,33 +430,6 @@ class Parser:
                             )
                         )
                     )
-    
-        # add new notation links and keep track of ones to remove in the next step
-        #to_remove = {}
-        #for k in self.notation_link.keys():
-        #    to_remove[k] = []
-        #    for d, nl in self.notation_link[k]:
-        #        for kk, vv in mappings.maps.items():
-        #
-        #            if nl in vv.keys() and nl != mappings.default[kk]:
-        #                to_remove[k].append((d, nl))
-        #                self.notation_link[k].append((d, mappings.default[kk]))
-    
-        # remove old notation links
-        #for k in to_remove.keys():
-        #    for d, nl in to_remove[k]:
-        #        self.notation_link[k].pop(self.notation_link[k].index((d, nl))) 
-
-
-
-
-
-
-
-
-
-
-
 
 
       

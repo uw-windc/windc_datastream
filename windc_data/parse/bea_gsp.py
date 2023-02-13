@@ -214,13 +214,7 @@ class BeaGsp(Parser):
             "85",
         }
         
-if __name__ == "__main__":
-    
-    w1 = BeaGsp(r"C:\Users\Mitch\Documents\WiNDC\windc_raw_data")
-    
-    
-    
-    
+
     
     
     

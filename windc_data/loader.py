@@ -84,22 +84,22 @@ class WindcEnvironment:
         self.gdx_data = {}
         gdx_sets = self._gdx_sets()
         for key,d in gdx_sets.items():
-            self.gdx_data[key] = d['elements']
+            self.gdx_data[key] = d#['elements']
 
-        for key in self:
+        for key in self.data:
             gdx_data  = self.data[key]._build_gdx_dict()
             for key,d in gdx_data.items():
-                self.gdx_data[key] = d['elements']
+                self.gdx_data[key] = d#['elements']
 
 
     def __iter__(self):
-        return iter(self.data)
+        return iter(self.gdx_data)
 
 
 
     def __getitem__(self,key):
         
-        return self.gdx_data[key]
+        return self.gdx_data[key]['elements']
         
         #return self.data[key].get_df()
 
@@ -116,12 +116,18 @@ class WindcEnvironment:
         ----------
         output_dir : String 
             The directory where the CSV files will live.
-
-
         """
         
-        for key in self:
-            self.data[key].to_csv(output_dir,key)
+        if not os.path.exists(os.path.join(output_dir,"set")):
+            os.mkdir(os.path.join(output_dir,"set"))
+
+        if not os.path.exists(os.path.join(output_dir,"parameter")):
+            os.mkdir(os.path.join(output_dir,"parameter"))
+
+        for key in self.gdx_data:
+            df = self.gdx_data[key]['elements']
+            dir = self.gdx_data[key]['type']
+            df.to_csv(os.path.join(output_dir,dir,key+".csv"),index=False)
 
 
     def _gdx_sets(self):
@@ -172,12 +178,12 @@ class WindcEnvironment:
         
         
         gdx_dict['yr'] = {'type':'set',
-                          'elements':list(range(self.years[0],self.years[1]+1)),
+                          'elements':pd.DataFrame(list(range(self.years[0],self.years[1]+1)),columns = ['yr']),
                           'text':"Years in WiNDC Database"}
         
         gdx_dict["version"] = {
             "type": "set",
-            "elements": {("windc_3_0_0","WiNDC 3.0.0")},
+            "elements": pd.DataFrame(data = self.json['version'],index = [0]),
             "text": "WiNDC data version number",
         }
         
@@ -200,7 +206,7 @@ class WindcEnvironment:
                 gdx_container.addSet(key,["*"]*num_domain,records = d['elements'],description = d['text'])
         
         
-        for key in self:
+        for key in self.data:
             self.data[key].build_gdx(gdx_container)
             
         gdx_container.write(os.path.join(output_dir,output_name))
