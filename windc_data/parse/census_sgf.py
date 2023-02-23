@@ -162,12 +162,21 @@ class CensusSGF(Parser):
         gdx_dict = {}
         
         df = self.df.merge(self.gams_maps['census_sgf'],left_on = "category",right_on="sgf_category")
+        df = df[['year','state','windc_label','units','value']]
+
+        df = df.rename(columns = {"year":"yr","state":"sr","windc_label":"ec"})
         
-        
-        
+        ec = pd.DataFrame(df["ec"].unique())
+        ec["Description"] = ""
+        gdx_dict["ec"] = {"type":"set",
+                          "elements":ec,
+                          "text": "Dynamically created set from the sgf_raw parameter, government expenditure categories"}
+
+        #sgf_raw_units(yr,sr,ec,*)
         gdx_dict['sgf_units'] = {'type':"parameter",
-                                        'elements':df[['year','state','windc_label','units','value']],
-                                        "text":"State government finances (SGF), with units as domain"
+                                 "domain":["yr","sr","ec","*"],
+                                'elements':df,
+                                "text":"State government finances (SGF), with units as domain"
                                         }
         
         

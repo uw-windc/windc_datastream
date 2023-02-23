@@ -97,11 +97,35 @@ class BeaSupply(Parser):
         df = self.df.merge(self.gams_maps['bea_all'],left_on = "IOCode",right_on="bea_code")
         
         df = df.merge(self.gams_maps['bea_all'],left_on = "Commodities_Industries",right_on="bea_code",suffixes=("","_col"))
-        
+        df = df[['year','windc_label','windc_label_col','units','value']]
+
+        df = df.rename(columns = {"year":"yr","windc_label":"ir_supply","windc_label_col":"jc_supply"})
+
+        ir_supply = df["ir_supply"].unique()
+        ir_supply = pd.DataFrame(ir_supply)
+        ir_supply["Description"] = ""
+
+        gdx_dict["ir_supply"] = {"type":"set",
+                                 "elements":ir_supply,
+                                 "text":"Dynamically created set domain of second dimension of supply_units"
+        }
+
+
+        jc_supply = df["jc_supply"].unique()
+        jc_supply = pd.DataFrame(jc_supply)
+        jc_supply["Description"] = ""
+
+        gdx_dict["jc_supply"] = {"type":"set",
+                                 "elements":jc_supply,
+                                 "text":"Dynamically created set domain of third dimension of supply_units"
+        }
+
+
         gdx_dict['supply_units'] = {'type':"parameter",
-                                        'elements':df[['year','windc_label','windc_label_col','units','value']],
-                                        "text":"Mapped annual supply tables, with units as domain"
-                                        }
+                                    "domain":["yr","ir_supply","jc_supply","*"],
+                                    'elements':df,
+                                    "text":"Mapped annual supply tables, with units as domain"
+        }
         
         
         

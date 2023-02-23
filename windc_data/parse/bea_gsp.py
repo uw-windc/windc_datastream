@@ -122,10 +122,27 @@ class BeaGsp(Parser):
 
         
         df = self.df.merge(self.gams_maps['bea_gsp'],left_on = "ComponentName",right_on = "bea_code")
+        df = df[['state','year','windc_label','IndustryId','units','value']]
+        df = df.rename(columns = {"state":"sr","year":"yr","windc_label":"gdpcat","IndustryId":"si"})
 
+        gdpcat = pd.DataFrame(df["gdpcat"].unique())
+        gdpcat["Description"] = ""
+        gdx_dict["gdpcat"] = {"type":"set",
+                              "elements":gdpcat,
+                              "text":"Dynamically created set from parameter gsp_units, GSP components"}
+
+        si = pd.DataFrame(df["si"].unique())
+        si["Description"] = ""
+        gdx_dict["si"] = {"type":"set",
+                            "elements":si,
+                            "text":"Dynamically created set from parameter gsp_units, State industry list" }
+
+
+        #gsp_units(sr,yr,gdpcat,si,*)
         
         gdx_dict['gsp_units'] = {"type":"parameter",
-                                "elements":df[['state','year','windc_label','IndustryId','units','value']],
+                                 "domain":["sr","yr","gdpcat","si","*"],
+                                "elements":df,
                                 "text":"Mapped state level annual GDP, with units as domain"}
     
         return gdx_dict

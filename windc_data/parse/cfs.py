@@ -152,16 +152,37 @@ class CFS(Parser):
     def _build_gdx_dict(self):
         gdx_dict = {}
 
+        cfs_ma = self.cfs_ma[['ORIG_MA','DEST_MA','NAICS','SCTG','units','value']]
 
         
-        gdx_dict['cfsdata_ma_units'] = {"type":"parameter",
-                                "elements":self.cfs_ma[['ORIG_MA','DEST_MA','NAICS','SCTG','units','value']],
-                                "text":"CFS - Metro area level shipments (value), with units as domain"}
+        #gdx_dict['cfsdata_ma_units'] = {"type":"parameter",
+        #                                "elements":cfs_ma,
+        #                                "text":"CFS - Metro area level shipments (value), with units as domain"}
         
-        
+
+        cfs_st = cfs_st[['ORIG_STATE','DEST_STATE','NAICS','SCTG','units','value']]
+        cfs_st = cfs_st.rename(columns = {"ORIG_STATE":"sr_orig","DEST_STATE":"sr_dest","NAICS":"n","SCTG":"sg"})
+
+        n = pd.DataFrame(cfs_st["n"].unique())
+        n["Description"] = ""
+        gdx_dict["n"] = {"type":"set",
+                         "elements":n,
+                         "text": "Dynamically created set from cfs2012 parameter, NAICS codes"
+                         }
+
+        sg = pd.DataFrame(cfs_st["sg"].unique())
+        sg["Description"] = ""
+        gdx_dict["n"] = {"type":"set",
+                         "elements":sg,
+                         "text": "Dynamically created set from cfs2012 parameter, SCTG codes"
+        }
+
+
+        #cfs2012_units(sr,sr,n,sg,*)        
         gdx_dict['cfsdata_st_units'] = {"type":"parameter",
-                                "elements":self.cfs_st[['ORIG_STATE','DEST_STATE','NAICS','SCTG','units','value']],
-                                "text":"CFS - State level shipments (value), with units as domain"}      
+                                        "domain":["sr","sr","n","sg","*"],
+                                        "elements":cfs_st,
+                                        "text":"CFS - State level shipments (value), with units as domain"}      
     
         return gdx_dict        
         

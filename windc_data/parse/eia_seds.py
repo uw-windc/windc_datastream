@@ -118,10 +118,27 @@ class EiaSeds(Parser):
     def _build_gdx_dict(self):
         gdx_dict = {}
 
+        df = self.df[['source','sector','state','year','units','value']]
+        df = df.rename(columns = {"state":"sr","year":"yr"})
 
+        source = pd.DataFrame(df["source"].unique())
+        source["Description"] = ""
+        gdx_dict["source"] = {"type":"set",
+                              "elements":source,
+                              "text":"Dynamically created set from seds_units parameter, EIA SEDS source codes"
+        }
 
+        sector = pd.DataFrame(df["sector"].unique())
+        sector["Description"] = ""
+        gdx_dict["sector"] = {"type":"set",
+                              "elements":sector,
+                              "text":"Dynamically created set from seds_units parameter, EIA SEDS sector codes"
+        }
+
+        #seds_units(source,sector,sr,yr,*)
         gdx_dict['seds_units'] = {"type":"parameter",
-                                "elements":self.df[['source','sector','state','year','units','value']],
+                                "domain":["source","sector","sr","yr","*"],
+                                "elements":df,
                                 "text":"Complete EIA SEDS data, with units as domain"}
     
         return gdx_dict

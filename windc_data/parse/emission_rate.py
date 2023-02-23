@@ -33,6 +33,7 @@ class EmissionRate(Parser):
 
         
         gdx_dict['co2perbtu_units'] = {"type":"parameter",
+                                "domain":["*","*"],
                                 "elements":self.df[['fuel','units','value']],
                                 "text":"Carbon dioxide -- not CO2e -- content, with units as domain"}
     

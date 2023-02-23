@@ -119,10 +119,14 @@ class EiaHeatrate(Parser):
         
         df = self.df.merge(self.gams_maps['eia_gen'],left_on = "variable",right_on = "eia_technologies")
 
-        
+        df = df[['year','windc_label','units','value']]
+        df = df.rename(columns = {"year":"yr"})
+        #heatrate_units(yr,*,*)
         gdx_dict['heatrate_units'] = {"type":"parameter",
-                                "elements":df[['year','windc_label','units','value']],
-                                "text":"Electricity generator (avg across tech) heat rate by fuel, with units as domain"}
+                                      "domain":["yr","*","*"],
+                                      "elements":df,
+                                      "text":"Electricity generator (avg across tech) heat rate by fuel, with units as domain"
+        }
     
         return gdx_dict
 

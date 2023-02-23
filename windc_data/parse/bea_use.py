@@ -93,10 +93,35 @@ class BeaUse(Parser):
         df = self.df.merge(self.gams_maps['bea_all'],left_on = "IOCode",right_on="bea_code")
         
         df = df.merge(self.gams_maps['bea_all'],left_on = "Commodities_Industries",right_on="bea_code",suffixes=("","_col"))
+
+        df = df[['year','windc_label','windc_label_col','units','value']]
+
+        df = df.rename(columns = {"year":"yr","windc_label":"ir_use","windc_label_col":"jc_use"})
         
+
+        ir_use = df["ir_use"].unique()
+        ir_use = pd.DataFrame(ir_use)
+        ir_use["Description"] = ""
+
+        gdx_dict["ir_use"] = {"type":"set",
+                                 "elements":ir_use,
+                                 "text":"Dynamically created set domain of third dimension of use_units"
+        }
+
+        jc_use = df["jc_use"].unique()
+        jc_use = pd.DataFrame(jc_use)
+        jc_use["Description"] = ""
+
+        gdx_dict["jc_use"] = {"type":"set",
+                                 "elements":jc_use,
+                                 "text":"Dynamically created set domain of third dimension of use_units"
+        }
+
+
         gdx_dict['use_units'] = {'type':"parameter",
-                                        'elements':df[['year','windc_label','windc_label_col','units','value']],
-                                        "text":"Mapped annual use tables, with units as domain"
+                                 "domain":["yr","ir_use","jc_use","*"],
+                                'elements':df[['year','windc_label','windc_label_col','units','value']],
+                                "text":"Mapped annual use tables, with units as domain"
                                         }
         
         

@@ -58,7 +58,6 @@ class WindcEnvironment:
                  json_path = "data_information.json"):
         
         
-        
         self.data = {}
         
         with open(os.path.join(data_dir,json_path),"r") as d:
@@ -178,7 +177,7 @@ class WindcEnvironment:
         
         
         gdx_dict['yr'] = {'type':'set',
-                          'elements':pd.DataFrame(list(range(self.years[0],self.years[1]+1)),columns = ['yr']),
+                          'elements':pd.DataFrame(zip(list(range(self.years[0],self.years[1]+1)),list(range(self.years[0],self.years[1]+1))),columns = ['yr',"description"]),
                           'text':"Years in WiNDC Database"}
         
         gdx_dict["version"] = {
@@ -191,13 +190,13 @@ class WindcEnvironment:
 
 
     def to_gdx(self,output_dir,output_name = "windc.gdx"):
-        import gamstransfer as gt
+        import gams.transfer as gt
         
         gdx_container = gt.Container()
         
+        gdx_sets = self._gdx_sets()
         
-        
-        for key,d in self._gams_sets():
+        for key,d in gdx_sets.items():
         #    for key,d in [(k,d) for (k,d) in gdx_dict.items() if d['type'] == 'set']:
             if key not in gdx_container.data:
                 num_domain = 1

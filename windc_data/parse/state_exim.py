@@ -110,10 +110,28 @@ class StateExIm(Parser):
     def _build_gdx_dict(self):
         gdx_dict = {}
 
+        df = self.df[["state","NAICS","year","flow","units","value"]]
+        df = df.rename(columns = {"state":"sr","NAICS":"n_usa","year":"yr","flow":"t"})
 
+        n_usa = pd.DataFrame(df["n_usa"].unique())
+        n_usa["Description"] = ""
+        gdx_dict["n_usa"] = {"type":"set",
+                             "elements":n_usa,
+                             "text":"Dynamically created set from parameter usatrd, NAICS codes"
+        }
+
+        t = pd.DataFrame(df["t"].unique())
+        t["Description"] = ""
+        gdx_dict["t"] = {"type":"set",
+                         "elements":t,
+                         "text":"Dynamically create set from parameter usatrd, Trade type (import/export)"
+        }
+
+        #usatrd_units(sr,n,yr,t,*)
         gdx_dict['usatrd_units'] = {"type":"parameter",
-                                "elements":self.df[["state","NAICS","year","flow","units","value"]],
-                                "text":"USA trade data, with units as domain"
+                                    "domain":["sr","n_usa","yr","t","*"],
+                                    "elements":df,
+                                    "text":"USA trade data, with units as domain"
                                 }
     
         return gdx_dict        

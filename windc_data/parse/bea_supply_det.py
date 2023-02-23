@@ -106,9 +106,28 @@ class BeaSupplyDet(Parser):
         df = self.df.merge(self.gams_maps['bea_all_det'],left_on = "IOCode",right_on="bea_code")
         
         df = df.merge(self.gams_maps['bea_all_det'],left_on = "Commodities_Industries",right_on="bea_code",suffixes=("","_col"))
-        
+        df = df[['year','windc_label','windc_label_col','units','value']]
+        df = df.rename(columns = {"year":"yr","windc_label":"ir_supply_det","windc_label_col":"jc_supply_det"})
+
+        ir_supply = pd.DataFrame(df["ir_supply_det"].unique())
+        ir_supply["Description"] = ""
+        gdx_dict["ir_supply_det"] = {"type":"set",
+                                     "elements":ir_supply,
+                                     "text":"Dynamically created set from parameter supply_det_units, identifiers for supply table rows"
+        }
+
+
+        jc_supply_det = pd.DataFrame(df["jc_supply_det"].unique())
+        jc_supply_det["Description"] = ""
+        gdx_dict["jc_supply_det"] = {"type":"set",
+                                     "elements":jc_supply_det,
+                                     "text":"Dynamically created set from parameter supply_det_units, identifiers for supply table Colums"
+        }
+
+        #supply_det_units(yr_det,ir_supply,jc_supply,*)
         gdx_dict['supply_det_units'] = {'type':"parameter",
-                                        'elements':df[['year','windc_label','windc_label_col','units','value']],
+                                        "domain":["yr","ir_supply_det","jc_supply_det","*"],
+                                        'elements':df,
                                         "text":"Mapped DETAILED supply tables, with units as domain (2007 and 2012 only)"
                                         }
         

@@ -103,9 +103,20 @@ class BeaPce(Parser):
         gdx_dict = {}
         
         df = self.df.merge(self.gams_maps['bea_pce'],left_on = "Description",right_on = "pce_description")
-        
+
+        df = df[['year','state','windc_label','units','value']]
+        df = df.rename(columns = {"year":"yr","state":"sr","windc_label":"pg"})
+
+        pg = pd.DataFrame(df["pg"].unique())
+        pg["Description"] = ""
+        gdx_dict["pg"] = {"type":"set",
+                          "elements":pg,
+                          "text":"Dynamically created set from parameter pce_units, PCE goods"}
+
+        #pce_raw_units(yr,sr,pg,*)
         gdx_dict['pce_units'] = {"type":"parameter",
-                                 "elements":df[['year','state','windc_label','units','value']],
+                                 "domain":["yr","sr","pg","*"],
+                                 "elements":df,
                                  'text':"Personal consumer expenditure by commodity (including aggregate subtotals, with units as domain"
                                  }
         

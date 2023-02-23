@@ -133,9 +133,20 @@ class Nass(Parser):
     def _build_gdx_dict(self):
         gdx_dict = {}
 
+        df = self.df[['state','year','DomainCategory','units','value']]
+        df = df.rename( columns = {"state":"sr","year":"yr","DomainCategory":"nass_naics"})
+
+        nass_naics = pd.DataFrame(df["nass_naics"].unique())
+        nass_naics["Description"] = ""
+        gdx_dict["nass_naics"] = {"type":"set",
+                                  "elements":nass_naics,
+                                  "text":"NIACS codes in the NASS dataset"
+        }
+
 
         gdx_dict['nass_units'] = {"type":"parameter",
-                                "elements":self.df[['state','year','DomainCategory','units','value']],
+                                "domain":["sr","yr","nass_naics","*"],
+                                "elements":df,
                                 "text":"Mapped state level annual GDP, with units as domain"}
     
         return gdx_dict       

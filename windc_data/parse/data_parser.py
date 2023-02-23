@@ -384,6 +384,7 @@ class Parser:
             raise NotImplementedError("_build_gdx_dict is not implemented")
         
         for key,d in [(k,d) for (k,d) in gdx_dict.items() if d['type'] == 'set']:
+            
             if key not in gdx_container.data:
                 num_domain = 1
                 if type(d['elements']) == type(pd.DataFrame()):
@@ -391,10 +392,11 @@ class Parser:
                 gdx_container.addSet(key,["*"]*num_domain,records = d['elements'],description = d['text'])
             
         for key,d in [(k,d) for (k,d) in gdx_dict.items() if d['type'] == 'parameter']:
-            
+            print("key")
             num_domain = len(d['elements'].columns)-1
             if key not in gdx_container.data:
-                gdx_container.addParameter(key,["*"]*num_domain,records = d['elements'],description = d['text'])
+                #["*"]*num_domain
+                gdx_container.addParameter(key,d["domain"],records = d['elements'],description = d['text'])
         
         
 

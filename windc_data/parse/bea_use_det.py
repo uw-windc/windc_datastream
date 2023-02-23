@@ -106,9 +106,27 @@ class BeaUseDet(Parser):
         df = self.df.merge(self.gams_maps['bea_all_det'],left_on = "IOCode",right_on="bea_code")
         
         df = df.merge(self.gams_maps['bea_all_det'],left_on = "Commodities_Industries",right_on="bea_code",suffixes=("","_col"))
-        
+        df = df[['year','windc_label','windc_label_col','units','value']]
+        df = df.rename(columns = {"year":"yr","windc_label":"ir_use_det","windc_label_col":"jc_use_det"})
+
+        ir_use_det = pd.DataFrame(df["ir_use_det"].unique())
+        ir_use_det["Description"] = ""
+        gdx_dict["ir_use_det"] = {"type":"set",
+                                  "elements":ir_use_det,
+                                  "text":"Dynamically created set from parameter use_det_units, identifiers for use table rows"
+        }
+
+        jc_use_det = pd.DataFrame(df["jc_use_det"].unique())
+        jc_use_det["Description"] = ""
+        gdx_dict["jc_use_det"] = {"type":"set",
+                                  "elements":jc_use_det,
+                                  "text":"Dynamically created set from parameter use_det_units, identifiers for use table columns"
+        }
+
+        #use_det_units(yr_det,ir_use,jc_use,*)
         gdx_dict['use_det_units'] = {'type':"parameter",
-                                        'elements':df[['year','windc_label','windc_label_col','units','value']],
+                                     "domain":["yr","ir_use_det","jc_use_det","*"],
+                                    'elements':df,
                                         "text":"Mapped DETAILED use tables, with units as domain (2007 and 2012 only)"
                                         }
         

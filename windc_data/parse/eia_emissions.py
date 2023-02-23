@@ -298,11 +298,24 @@ class EiaEmissions(Parser):
 
         
         df = self.df.merge(self.gams_maps['eia_emissions'],left_on = "sector",right_on="eia_sector")
+        df = df[['windc_label','state','year','units','value']]
+        df = df.rename( columns = {"windc_label":"co2dim","state":"r","year":"yr"})
 
-        
+        co2dim = pd.DataFrame(df["co2dim"].unique())
+        co2dim["Description"] = ""
+        gdx_dict["co2dim"] = {"type":"set",
+                              "elements":co2dim,
+                              "text":"Dynamically created set from emissions_units parameter, EIA C02 sector codes"
+        }
+
+
+
+        #emissions_units(co2dim,r,yr,*)
         gdx_dict['emissions_units'] = {"type":"parameter",
-                                "elements":df[['windc_label','state','year','units','value']],
-                                "text":"CO2 emissions by fuel and sector, with units as domain"}
+                                       "domain":["co2dim","r","yr","*"],
+                                       "elements":df,
+                                       "text":"CO2 emissions by fuel and sector, with units as domain"
+                                       }
     
         return gdx_dict
 

@@ -107,10 +107,12 @@ class EiaCrude(Parser):
 
         
         #df = self.df.merge(self.gams_maps['bea_gsp'],left_on = "ComponentName",right_on = "bea_code")
-
+        df = self.df[['year','units','value']]
+        df = df.rename(columns = {"year":"yr"})
         
         gdx_dict['crude_oil_price_units'] = {"type":"parameter",
-                                "elements":self.df[['year','units','value']],
+                                "domain":["yr","*"],
+                                "elements":df,
                                 "text":"Crude oil composite acquisition cost by refiners, with units as domain"}
     
         return gdx_dict
