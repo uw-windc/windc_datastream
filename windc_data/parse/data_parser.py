@@ -392,7 +392,6 @@ class Parser:
                 gdx_container.addSet(key,["*"]*num_domain,records = d['elements'],description = d['text'])
             
         for key,d in [(k,d) for (k,d) in gdx_dict.items() if d['type'] == 'parameter']:
-            print("key")
             num_domain = len(d['elements'].columns)-1
             if key not in gdx_container.data:
                 #["*"]*num_domain

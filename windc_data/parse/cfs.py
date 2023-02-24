@@ -160,7 +160,7 @@ class CFS(Parser):
         #                                "text":"CFS - Metro area level shipments (value), with units as domain"}
         
 
-        cfs_st = cfs_st[['ORIG_STATE','DEST_STATE','NAICS','SCTG','units','value']]
+        cfs_st = self.cfs_st[['ORIG_STATE','DEST_STATE','NAICS','SCTG','units','value']]
         cfs_st = cfs_st.rename(columns = {"ORIG_STATE":"sr_orig","DEST_STATE":"sr_dest","NAICS":"n","SCTG":"sg"})
 
         n = pd.DataFrame(cfs_st["n"].unique())

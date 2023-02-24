@@ -120,7 +120,7 @@ class BeaUse(Parser):
 
         gdx_dict['use_units'] = {'type':"parameter",
                                  "domain":["yr","ir_use","jc_use","*"],
-                                'elements':df[['year','windc_label','windc_label_col','units','value']],
+                                'elements':df,
                                 "text":"Mapped annual use tables, with units as domain"
                                         }
         
