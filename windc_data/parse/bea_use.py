@@ -79,12 +79,12 @@ class BeaUse(Parser):
             self.data[key] = tt
             
     def build_notations(self):
-        self.notation_link = [("year", "year")]            
+        self.notation_link = [("year", "year")]
 
 
     def transform(self):
-                
         self.df = self.df.rename(columns = self.data_info['columns'])       
+        
         
     def _build_gdx_dict(self):
         
