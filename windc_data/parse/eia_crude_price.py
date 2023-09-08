@@ -59,7 +59,7 @@ class EiaCrude(Parser):
     def _load_data(self):
         
 
-        self.data['crude'] = pd.read_excel(os.path.join(self.data_dir,self.data_info['data']['path']), sheet_name="Data 1", skiprows=2)
+        self.data['crude'] = pd.read_csv(os.path.join(self.data_dir,self.data_info['data']['path']), skiprows=4)
     
     
     
