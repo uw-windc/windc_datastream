@@ -41,7 +41,7 @@ class StateExIm(Parser):
        
             self.data[key] = pd.read_csv(
                 os.path.join(self.data_dir, data['path']), 
-                skiprows=2, 
+                skiprows=3, 
                 engine="c"
                 )
 
