@@ -1,4 +1,4 @@
-# WiNDC Datastream V3.0.0
+# WiNDC Datastream Base Year 2021
 Data processing tools that generate the input GDX used to build the core WiNDC database.
 
 This is an updated version of the build stream built using a class structure. 
