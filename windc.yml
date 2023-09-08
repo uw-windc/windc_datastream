@@ -2,15 +2,11 @@ name: windc_test
 channels:
   - defaults
 dependencies:
-  - ipython
-  - matplotlib
-  - networkx
-  - pandas
-  - python>=3.6
-  - pip
-  - tqdm
-  - xlrd
+  - openpyxl=3.0.10
+  - pandas=1.4.4
+  - pip=22.2.2
+  - python=3.9.13
+  - setuptools=63.4.1
   - pip:
-    - argparse
-    - schema
-    - terminaltables
+    - terminaltables==3.1.10
+
