@@ -83,7 +83,7 @@ class EiaEmissions(Parser):
 
     
         t = pd.read_excel(
-            data_dir, sheet_name="Sheet1", skiprows=2, nrows=52
+            data_dir, sheet_name="Coal", skiprows=2, nrows=52
         )
     
         t.drop(columns=["Percent", "Absolute"], inplace=True)
@@ -106,7 +106,7 @@ class EiaEmissions(Parser):
     def _natgas_emissions(self,data_dir):
 
         t = pd.read_excel(
-            data_dir, sheet_name="Sheet1", skiprows=2, nrows=52
+            data_dir, sheet_name="Natural Gas", skiprows=2, nrows=52
         )
     
         t.drop(columns=["Percent", "Absolute"], inplace=True)
@@ -128,7 +128,7 @@ class EiaEmissions(Parser):
     
     def _petrol_emissions(self,data_dir):
         t = pd.read_excel(
-            data_dir, sheet_name="Sheet1", skiprows=2, nrows=52
+            data_dir, sheet_name="Petroleum", skiprows=2, nrows=52
         )
     
         t.drop(columns=["Percent", "Absolute"], inplace=True)
@@ -151,7 +151,7 @@ class EiaEmissions(Parser):
     def _industrial_emissions(self,data_dir):
 
         t = pd.read_excel(
-            data_dir, sheet_name="Sheet1", skiprows=2, nrows=52
+            data_dir, sheet_name="Industrial", skiprows=2, nrows=52
         )
     
         t.drop(columns=["Percent", "Absolute"], inplace=True)
@@ -174,7 +174,7 @@ class EiaEmissions(Parser):
     def _commercial_emissions(self,data_dir):
 
         t = pd.read_excel(
-            data_dir, sheet_name="Sheet1", skiprows=2, nrows=52
+            data_dir, sheet_name="Commercial", skiprows=2, nrows=52
         )
     
         t.drop(columns=["Percent", "Absolute"], inplace=True)
@@ -197,7 +197,7 @@ class EiaEmissions(Parser):
     def _residential_emissions(self,data_dir):
 
         t = pd.read_excel(
-            data_dir, sheet_name="Sheet1", skiprows=2, nrows=52
+            data_dir, sheet_name="Residential", skiprows=2, nrows=52
         )
     
         t.drop(columns=["Percent", "Absolute"], inplace=True)
@@ -219,7 +219,7 @@ class EiaEmissions(Parser):
     
     def _electricity_emissions(self,data_dir):
         t = pd.read_excel(
-            data_dir, sheet_name="Sheet1", skiprows=2, nrows=52
+            data_dir, sheet_name="Electric Power", skiprows=2, nrows=52
         )
     
         t.drop(columns=["Percent", "Absolute"], inplace=True)
@@ -241,7 +241,7 @@ class EiaEmissions(Parser):
     
     def _transport_emissions(self,data_dir):
         t = pd.read_excel(
-            data_dir, sheet_name="Sheet1", skiprows=2, nrows=52
+            data_dir, sheet_name="Transportation", skiprows=2, nrows=52
         )
     
         t.drop(columns=["Percent", "Absolute"], inplace=True)
