@@ -68,8 +68,8 @@ class EiaCrude(Parser):
         for key,t in self.data.items():
             t.rename(
                 {
-                    "Date": "year",
-                    "U.S. Crude Oil Composite Acquisition Cost by Refiners (Dollars per Barrel)": "price",
+                    "Year": "year",
+                    "U.S. Crude Oil Composite Acquisition Cost by Refiners Dollars per Barrel": "price",
                 },
                 axis="columns",
                 inplace=True,
@@ -79,7 +79,7 @@ class EiaCrude(Parser):
             t["notes"] = "crude oil composite acquisition cost by refiners"
         
             # extract year
-            t["year"] = t["year"].dt.year
+            #t["year"] = t["year"].dt.year
         
             # typing
             t["year"] = t["year"].map(str)
