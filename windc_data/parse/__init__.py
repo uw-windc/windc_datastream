@@ -21,6 +21,8 @@ from .nass import Nass
 from .state_exim import StateExIm
 from .gams_maps import GamsMaps
 from .emission_rate import EmissionRate
+from .faf_data import FAF
+from .usda_time_series import USDATimeSeries
 #from . import bea_gsp
 #from . import bea_gsp
 #from . import bea_gsp
