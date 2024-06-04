@@ -221,30 +221,24 @@ class Parser:
         
         
         self._load_data()
+        
         self.clean()
-        
         self.bulk_strip()
+        self.join()    
         
-
-        
-        
-        self.join()
-    
-    
-
-    
         self.remove_zeros()
         
         self.bulk_replace(REPLACE_DICT)
-    
-        
         self.build_notations()
         
         self.test_notation()
         self.drop_rows()
+        
         self.remap()
         
+        
         self.transform()
+        
         
         
     
@@ -329,6 +323,7 @@ class Parser:
     def bulk_replace(self, convert):
         #for k, v in self.data.items():
         self.df.replace(convert, inplace=True)                  
+        
                     
         
         
@@ -362,7 +357,7 @@ class Parser:
     def _build_gdx_dict(self):
         """
         Overwrite to build the dictionary that creates the gams output. This should
-        return a dictionary with key the Gams name and value a diction of the form
+        return a dictionary with key the Gams name and value a dictionary of the form
     
         "type" -> Either "set" or "parameter"
         "elements" -> The records for gams, for parameters ensure the "value" 
