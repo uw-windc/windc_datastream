@@ -46,6 +46,7 @@ class BeaPce(Parser):
                 engine="c",
                 nrows=data['nrows'],
                 low_memory=False,
+                encoding = "latin-1"
             )
 
 

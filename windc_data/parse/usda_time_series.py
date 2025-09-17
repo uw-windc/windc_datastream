@@ -21,7 +21,7 @@ class USDATimeSeries(Parser):
             "Total exports",
             skiprows = 2,
             usecols = self.data_info["data"]["colrange"],
-            nrows = 53
+            nrows = 52
         )
 
     def clean(self):
@@ -47,8 +47,14 @@ class USDATimeSeries(Parser):
 
         df = self.df
 
+        ayr = df["year"].unique()
+        gdx_dict["ayr"] = {"type":"set",
+                           "elements":ayr,
+                           "text":"Dynamically created set from parameter usda"
+        }
+
         gdx_dict["usda"] = {"type":"parameter",
-                            "domain":["sr","yr"],
+                            "domain":["r","ayr"],
                             "elements":df,
                             "text":"State level exports from usda of total agricultural output"
         }

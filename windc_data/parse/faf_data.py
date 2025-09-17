@@ -80,7 +80,11 @@ class FAF(Parser):
         
         df = df.rename(columns = {"dms_origst":"orig","dms_destst":"dest"})
 
-
+        faf_years = pd.DataFrame(df["year"].unique())
+        faf_years["Description"] = ""
+        gdx_dict["faf_years"] = {"type":"set",
+                            "elements":faf_years,
+                            "text":"Dynamically created set from parameter faf_units, years" }
 
         gdx_dict["faf_units"] = {"type":"parameter",
                                  "domain": ["sr","sr","sg","yr"],
