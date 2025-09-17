@@ -38,31 +38,28 @@ class BeaSupplyDet(Parser):
                 os.path.join(self.data_dir, self.data_info['data']['path']),
                 sheet_name = str(key),
                 skiprows = self.data_info['data']['skip_rows'],
-                nrows = 408
+                nrows = 404
             )
 
 
     def clean(self):
         
         for key,t in self.data.items():
-            coldex = [t.loc[0, "Unnamed: 2":].tolist(), t.loc[1, "Unnamed: 2":].tolist()]
-            coldex = list(zip(*coldex))
-            coldex = pd.MultiIndex.from_tuples(
-                coldex, names=["Column_Name", "Commodities/Industries"]
-            )
-        
-            t.drop([0, 1], inplace=True)
-            index = [t["Unnamed: 0"].tolist(), t["Unnamed: 1"].tolist()]
-            index = list(zip(*index))
-            index = pd.MultiIndex.from_tuples(index, names=["IOCode", "Row_Name"])
-        
-            t.set_index(["Unnamed: 0", "Unnamed: 1"], inplace=True)
-        
-            # create MultiIndex dataframe for melting
-            tt = pd.DataFrame(data=t.values, index=index, columns=coldex)
-        
-            tt = pd.melt(tt.reset_index(drop=False), id_vars=["IOCode", "Row_Name"])
-            tt.fillna(0, inplace=True)
+            t.iloc[1,0] = "IOCode"
+            t.iloc[1,1] = t.iloc[0,0]
+            to_drop = t.iloc[1,1]
+
+
+
+            t.columns = t.iloc[1,:]
+
+            t.drop([0,1], inplace=True)
+            t.drop(to_drop, inplace=True, axis="columns")
+
+
+            tt = pd.melt(t, id_vars = ["IOCode"], var_name = to_drop)
+
+            tt.dropna(inplace=True)
         
             tt["units"] = "millions of us dollars (USD)"
         
@@ -71,18 +68,18 @@ class BeaSupplyDet(Parser):
         
             # typing
             tt["IOCode"] = tt["IOCode"].map(str)
-            tt["Row_Name"] = tt["Row_Name"].map(str)
+            #tt["Row_Name"] = tt["Row_Name"].map(str)
             tt["Commodities/Industries"] = tt["Commodities/Industries"].map(str)
-            tt["Column_Name"] = tt["Column_Name"].map(str)
+            #tt["Column_Name"] = tt["Column_Name"].map(str)
             tt["value"] = tt["value"].map(float)
             tt["units"] = tt["units"].map(str)
         
             self.data[key] = tt[
                                 [
                                     "IOCode",
-                                    "Row_Name",
+                                    #"Row_Name",
                                     "Commodities/Industries",
-                                    "Column_Name",
+                                    #"Column_Name",
                                     "value",
                                     "year",
                                     "units",

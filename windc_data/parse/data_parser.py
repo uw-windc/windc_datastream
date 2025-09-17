@@ -222,6 +222,7 @@ class Parser:
         
         self._load_data()
         
+        
         self.clean()
         self.bulk_strip()
         self.join()    
