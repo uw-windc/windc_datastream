@@ -18,7 +18,7 @@ class USDATimeSeries(Parser):
         
         self.data["time"] = pd.read_excel(
             path,
-            "Total exports",
+            "Total Exports",
             skiprows = 2,
             usecols = self.data_info["data"]["colrange"],
             nrows = 52
